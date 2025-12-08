@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #f0f2f5;
+    color: #1c1e21;
+  }
+  
+  .app-layout {
+    padding-top: 60px;
+  }
+  
+  .main-content {
+    display: flex;
+    min-height: calc(100vh - 60px);
+  }
+  
+  .sidebar {
+    width: 250px;
+    background: white;
+    border-right: 1px solid #e0e0e0;
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    overflow-y: auto;
+  }
+  
+  .content-area {
+    flex: 1;
+    margin-left: 250px;
+    padding: 20px;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .btn-primary {
+    background: #1877f2;
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background: #166fe5;
+  }
+  
+  .btn-secondary {
+    background: #e4e6eb;
+    color: #1c1e21;
+  }
+  
+  .btn-secondary:hover {
+    background: #d8dadf;
+  }
+  
+  .btn-danger {
+    background: #e41e3f;
+    color: white;
+  }
+  
+  .btn-danger:hover {
+    background: #c91e39;
+  }
+  
+  /* Forms */
+  .form-group {
+    margin-bottom: 16px;
+  }
+  
+  .form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #1c1e21;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+  }
+  
+  .form-input:focus {
+    outline: none;
+    border-color: #1877f2;
+    box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+  }
+  
+  .form-textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+    }
+    
+    .content-area {
+      margin-left: 0;
+    }
+    
+    .main-content {
+      flex-direction: column;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.3s ease-in;
+  }
+  
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  
+  .slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
