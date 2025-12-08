@@ -10,7 +10,6 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import { CgAddR } from "react-icons/cg";
-import styled from "styled-components";
 
 const NavbarContainer = styled.nav`
   position: fixed;

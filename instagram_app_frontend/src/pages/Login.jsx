@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import styled from "styled-components";
 import { FiMail, FiLock, FiEye, FiEyeOff } from "react-icons/fi";
 
 const LoginContainer = styled.div`

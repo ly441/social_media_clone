@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { postAPI } from "../../services/api";
-import toast from "react-hot-toast";
-import styled from "styled-components";
-import { FiImage, FiSmile, FiMapPin } from "react-icons/fi";
 
 const CreatePostContainer = styled.div`
   background: white;

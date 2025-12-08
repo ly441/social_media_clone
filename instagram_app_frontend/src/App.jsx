@@ -5,13 +5,12 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+
 import { AuthProvider, useAuth } from "./context/AuthContext";
-import ProtectedRoute from "./components/common/ProtectedRoute";
+import ProtectedRoute from "./components/common/routes";
 import Navbar from "./components/common/Navbar";
 import Sidebar from "./components/common/Sidebar";
-import Loader from "./components/common/Loader";
-
+import Loader from "./components/common/Loader.jsx";
 // Pages
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -21,7 +20,6 @@ import Explore from "./pages/Explore";
 import NotFound from "./pages/NotFound";
 
 // Styles
-import "./styles/globals.css";
 
 const AppLayout = ({ children }) => {
   const { user } = useAuth();

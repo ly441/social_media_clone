@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
 import { FiHome, FiSearch, FiMeh } from "react-icons/fi";
 
 const NotFoundContainer = styled.div`

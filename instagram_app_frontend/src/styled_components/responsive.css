@@ -1,0 +1,466 @@
+/* Responsive Breakpoints */
+:root {
+    --breakpoint-xs: 480px;
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+  }
+  
+  /* Mobile First Approach */
+  
+  /* Extra Small Devices (phones, less than 480px) */
+  @media (max-width: 480px) {
+    .container {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    
+    .hide-xs {
+      display: none !important;
+    }
+    
+    .show-xs {
+      display: block !important;
+    }
+    
+    h1 {
+      font-size: 24px !important;
+    }
+    
+    h2 {
+      font-size: 20px !important;
+    }
+    
+    .btn {
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+  }
+  
+  /* Small Devices (phones, 480px and up) */
+  @media (min-width: 480px) {
+    .container {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+  
+  /* Medium Devices (tablets, 768px and up) */
+  @media (min-width: 768px) {
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    
+    .hide-md {
+      display: none !important;
+    }
+    
+    .show-md {
+      display: block !important;
+    }
+    
+    /* Two column layout for tablets */
+    .grid-md-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+  }
+  
+  /* Large Devices (desktops, 1024px and up) */
+  @media (min-width: 1024px) {
+    .container {
+      max-width: 960px;
+    }
+    
+    .hide-lg {
+      display: none !important;
+    }
+    
+    .show-lg {
+      display: block !important;
+    }
+    
+    /* Three column layout for desktops */
+    .grid-lg-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    /* Sidebar layout */
+    .with-sidebar {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 30px;
+    }
+  }
+  
+  /* Extra Large Devices (large desktops, 1280px and up) */
+  @media (min-width: 1280px) {
+    .container {
+      max-width: 1140px;
+    }
+    
+    /* Four column layout for large screens */
+    .grid-xl-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+  }
+  
+  /* 2XL Devices (very large desktops, 1536px and up) */
+  @media (min-width: 1536px) {
+    .container {
+      max-width: 1320px;
+    }
+  }
+  
+  /* Responsive Typography */
+  @media (max-width: 768px) {
+    html {
+      font-size: 14px;
+    }
+    
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    h4 { font-size: 18px; }
+    h5 { font-size: 16px; }
+    h6 { font-size: 14px; }
+  }
+  
+  @media (max-width: 480px) {
+    html {
+      font-size: 13px;
+    }
+    
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 18px; }
+    h4 { font-size: 16px; }
+    h5 { font-size: 14px; }
+    h6 { font-size: 13px; }
+  }
+  
+  /* Responsive Navigation */
+  @media (max-width: 768px) {
+    .nav-desktop {
+      display: none;
+    }
+    
+    .nav-mobile {
+      display: flex;
+    }
+    
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 1000;
+      padding: 20px;
+      overflow-y: auto;
+    }
+  }
+  
+  @media (min-width: 769px) {
+    .nav-mobile {
+      display: none;
+    }
+  }
+  
+  /* Responsive Tables */
+  @media (max-width: 768px) {
+    .responsive-table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    
+    table {
+      min-width: 600px;
+    }
+  }
+  
+  /* Responsive Images */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .responsive-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  /* Responsive Grid */
+  .grid {
+    display: grid;
+    gap: 16px;
+  }
+  
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  
+  @media (min-width: 640px) {
+    .grid-cols-2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .grid-cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .grid-cols-4 {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .grid-cols-5 {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  
+  /* Responsive Flexbox */
+  .flex {
+    display: flex;
+  }
+  
+  .flex-col {
+    flex-direction: column;
+  }
+  
+  @media (min-width: 768px) {
+    .flex-row-md {
+      flex-direction: row;
+    }
+    
+    .flex-col-md {
+      flex-direction: column;
+    }
+  }
+  
+  /* Responsive Spacing */
+  .p-responsive {
+    padding: 16px;
+  }
+  
+  @media (min-width: 768px) {
+    .p-responsive {
+      padding: 24px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .p-responsive {
+      padding: 32px;
+    }
+  }
+  
+  .m-responsive {
+    margin: 16px;
+  }
+  
+  @media (min-width: 768px) {
+    .m-responsive {
+      margin: 24px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .m-responsive {
+      margin: 32px;
+    }
+  }
+  
+  /* Responsive Forms */
+  @media (max-width: 768px) {
+    .form-inline {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .form-inline .form-group {
+      width: 100%;
+    }
+    
+    .form-inline .btn {
+      width: 100%;
+    }
+  }
+  
+  /* Responsive Modal */
+  @media (max-width: 768px) {
+    .modal-content {
+      margin: 10px;
+      max-height: calc(100vh - 20px);
+    }
+    
+    .modal-dialog {
+      width: 100%;
+      margin: 0;
+    }
+  }
+  
+  /* Responsive Cards */
+  @media (max-width: 768px) {
+    .card-deck {
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .card-deck .card {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+  
+  /* Responsive Utilities */
+  .hidden {
+    display: none;
+  }
+  
+  @media (max-width: 480px) {
+    .hidden-xs {
+      display: none;
+    }
+    
+    .visible-xs {
+      display: block;
+    }
+  }
+  
+  @media (min-width: 481px) and (max-width: 767px) {
+    .hidden-sm {
+      display: none;
+    }
+    
+    .visible-sm {
+      display: block;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hidden-md {
+      display: none;
+    }
+    
+    .visible-md {
+      display: block;
+    }
+  }
+  
+  @media (min-width: 1024px) and (max-width: 1279px) {
+    .hidden-lg {
+      display: none;
+    }
+    
+    .visible-lg {
+      display: block;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .hidden-xl {
+      display: none;
+    }
+    
+    .visible-xl {
+      display: block;
+    }
+  }
+  
+  /* Touch Device Optimizations */
+  @media (hover: none) and (pointer: coarse) {
+    .btn, 
+    .nav-link,
+    .dropdown-item {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    input,
+    select,
+    textarea {
+      font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+    
+    .touch-target {
+      padding: 12px;
+    }
+  }
+  
+  /* Print Styles */
+  @media print {
+    .no-print {
+      display: none;
+    }
+    
+    .print-only {
+      display: block;
+    }
+    
+    body {
+      background: white;
+      color: black;
+    }
+    
+    a {
+      text-decoration: underline;
+      color: black;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: none;
+    }
+  }
+  
+  /* Dark Mode Support */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light-mode) {
+      --bg-primary: #1c1e21;
+      --bg-secondary: #242526;
+      --text-primary: #e4e6eb;
+      --text-secondary: #b0b3b8;
+      --border-color: #3a3b3c;
+    }
+  }
+  
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    :root {
+      --primary-color: #0000ff;
+      --secondary-color: #ff0000;
+    }
+    
+    .btn {
+      border: 2px solid currentColor;
+    }
+  }

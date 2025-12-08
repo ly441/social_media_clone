@@ -3,10 +3,9 @@ import { useParams } from "react-router-dom";
 import { userAPI, followAPI } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import ProfileHeader from "../components/user/ProfileHeader";
-import EditProfileModal from "../components/user/EditProfileModal";
+import EditProfileModal from "../components/user/EditProfile";
 import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
-import styled from "styled-components";
 
 const ProfileContainer = styled.div`
   max-width: 900px;

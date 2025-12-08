@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { postAPI } from "../services/api";
 import { useAuth } from "../context/AuthContext";
 import CreatePost from "../components/post/CreatePost";
 import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
-import styled from "styled-components";
+
 
 const HomeContainer = styled.div`
   max-width: 680px;

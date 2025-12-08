@@ -2,19 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { postAPI, commentAPI } from "../../services/api";
-import toast from "react-hot-toast";
-import moment from "moment";
-import styled from "styled-components";
-import {
-  FiHeart,
-  FiMessageCircle,
-  FiShare2,
-  FiMoreVertical,
-  FiEdit2,
-  FiTrash2,
-} from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
-import CommentSection from "./CommentSection";
+import Comment from "././Comment";
 
 const PostContainer = styled.div`
   background: white;

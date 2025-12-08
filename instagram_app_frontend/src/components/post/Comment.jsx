@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { commentAPI } from "../../services/api";
-import toast from "react-hot-toast";
-import moment from "moment";
-import styled from "styled-components";
-import { FiEdit2, FiTrash2, FiMoreVertical } from "react-icons/fi";
+
+
 
 const CommentContainer = styled.div`
   padding: 12px 0;

@@ -4,7 +4,6 @@ import { userAPI, postAPI } from "../services/api";
 import UserCard from "../components/user/UserCard";
 import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
-import styled from "styled-components";
 import { FiSearch, FiUsers, FiTrendingUp } from "react-icons/fi";
 
 const ExploreContainer = styled.div`
