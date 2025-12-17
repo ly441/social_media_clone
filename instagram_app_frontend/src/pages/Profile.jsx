@@ -7,59 +7,7 @@ import EditProfileModal from "../components/user/EditProfile";
 import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
 
-const ProfileContainer = styled.div`
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 20px;
-`;
 
-const ProfileContent = styled.div`
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 30px;
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const ProfileSidebar = styled.div`
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-`;
-
-const ProfileMain = styled.div``;
-
-const Section = styled.div`
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-`;
-
-const SectionTitle = styled.h3`
-  margin-bottom: 16px;
-  color: #1c1e21;
-`;
-
-const InfoItem = styled.div`
-  margin-bottom: 12px;
-  display: flex;
-  gap: 10px;
-`;
-
-const InfoLabel = styled.span`
-  font-weight: 600;
-  color: #65676b;
-  min-width: 100px;
-`;
-
-const InfoValue = styled.span`
-  color: #1c1e21;
-`;
 
 const Profile = () => {
   const { userId } = useParams();

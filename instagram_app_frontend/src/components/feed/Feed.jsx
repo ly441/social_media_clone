@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../../context/AuthContext";
 import { SkeletonLoader } from "../common/Loader";
-import styled from "styled-components";
+
 
 const FeedContainer = styled.div`
   flex: 1;

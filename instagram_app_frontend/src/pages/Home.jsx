@@ -6,11 +6,7 @@ import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
 
 
-const HomeContainer = styled.div`
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 20px;
-`;
+
 
 const Home = () => {
   const { user } = useAuth();
