@@ -1,16 +1,12 @@
 import React from "react";
 
-
-
-export const Loader = ({ text = "Loading..." }) => (
-  <LoaderContainer>
-    <div style={{ textAlign: "center" }}>
-      <Spinner />
-      {text && <LoaderText>{text}</LoaderText>}
+export const Loader = ({ text = "Loading..." }) => {
+  return (
+    <div className="loader-container">
+      <div className="spinner" />
+      {text && <p className="loader-text">{text}</p>}
     </div>
-  </LoaderContainer>
-);
-
-
+  );
+};
 
 export default Loader;

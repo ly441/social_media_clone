@@ -1,15 +1,9 @@
 
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
-
-import { AuthProvider, useAuth } from "./context/AuthContext";
-import ProtectedRoute from "./components/common/ProtectedRoute"; // Fixed import name
+import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
+import ProtectedRoute from "./components/common/ProtectedRoute.jsx";
 import Loader from "./components/common/Loader.jsx";
 
 // Pages
@@ -20,19 +14,14 @@ import Profile from "./pages/Profile";
 import Explore from "./pages/Explore";
 import NotFound from "./pages/NotFound";
 
-// Styles
-
-
-// Create a separate component for the authenticated layout
+// Layouts
 const AuthenticatedLayout = ({ children }) => {
   const { user } = useAuth();
 
   if (!user) {
-    // Show loading or redirect to login
     return <Navigate to="/login" />;
   }
 
-  // Dynamically import these components only when authenticated
   const Navbar = React.lazy(() => import("./components/common/Navbar"));
   const Sidebar = React.lazy(() => import("./components/common/Sidebar"));
 
@@ -49,21 +38,18 @@ const AuthenticatedLayout = ({ children }) => {
   );
 };
 
-// Public layout for login/register pages
-const PublicLayout = ({ children }) => {
-  return <div className="public-layout">{children}</div>;
-};
+const PublicLayout = ({ children }) => (
+  <div className="public-layout">{children}</div>
+);
 
 const AppRoutes = () => {
   const { loading, isAuthenticated } = useAuth();
 
-  if (loading) {
-    return <Loader />;
-  }
+  if (loading) return <Loader />;
 
   return (
     <Routes>
-      {/* Public routes */}
+      {/* Public */}
       <Route
         path="/login"
         element={
@@ -76,6 +62,7 @@ const AppRoutes = () => {
           )
         }
       />
+
       <Route
         path="/register"
         element={
@@ -89,7 +76,7 @@ const AppRoutes = () => {
         }
       />
 
-      {/* Protected routes with authenticated layout */}
+      {/* Protected */}
       <Route
         path="/"
         element={
@@ -100,6 +87,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/profile/:userId?"
         element={
@@ -110,6 +98,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/explore"
         element={
@@ -121,22 +110,15 @@ const AppRoutes = () => {
         }
       />
 
-      {/* 404 route */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
 
-function App() {
+export default function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <AuthenticatedLayout>
-          <AppRoutes />
-        </AuthenticatedLayout>
-      </AuthProvider>
-    </Router>
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
   );
 }
-
-export default App;
