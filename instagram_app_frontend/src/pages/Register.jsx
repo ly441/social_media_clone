@@ -107,14 +107,14 @@ const FooterLink = styled(Link)`
 `;
 
 const ErrorMessage = styled.p`
-  color: #e41e3f;
+  color: red;
   font-size: 14px;
   margin-bottom: 10px;
   text-align: center;
 `;
 
 const SuccessMessage = styled.p`
-  color: #42b72a;
+  color: green;
   font-size: 14px;
   margin-bottom: 10px;
   text-align: center;
@@ -148,9 +148,11 @@ const LoadingOverlay = styled.div`
   }
 `;
 
+// Password Strength
 const PasswordStrength = styled.div`
-  font-size: 12px;
   margin-top: 5px;
+  font-size: 12px;
+  color: #555;
 `;
 
 const StrengthBar = styled.div`
@@ -158,38 +160,28 @@ const StrengthBar = styled.div`
   height: 6px;
   background-color: #eee;
   border-radius: 3px;
-  margin-top: 3px;
+  margin-top: 4px;
 `;
 
 const StrengthFill = styled.div`
   height: 100%;
   border-radius: 3px;
-  background-color: ${(props) => {
-    switch (props.strength) {
-      case "weak":
-        return "#e41e3f";
-      case "fair":
-        return "#f5a623";
-      case "good":
-        return "#42b72a";
-      case "strong":
-        return "#1877f2";
-      default:
-        return "#eee";
+  width: ${(props) => {
+    switch (props.$strength) {
+      case "weak": return "25%";
+      case "fair": return "50%";
+      case "good": return "75%";
+      case "strong": return "100%";
+      default: return "0%";
     }
   }};
-  width: ${(props) => {
-    switch (props.strength) {
-      case "weak":
-        return "25%";
-      case "fair":
-        return "50%";
-      case "good":
-        return "75%";
-      case "strong":
-        return "100%";
-      default:
-        return "0%";
+  background-color: ${(props) => {
+    switch (props.$strength) {
+      case "weak": return "#e41e3f";
+      case "fair": return "#f5a623";
+      case "good": return "#42b72a";
+      case "strong": return "#1877f2";
+      default: return "#eee";
     }
   }};
   transition: width 0.3s ease;
@@ -212,12 +204,10 @@ const Register = () => {
   const [success, setSuccess] = useState("");
 
   const calculatePasswordStrength = (password) => {
-    if (password.length === 0) return "";
+    if (!password) return "";
     if (password.length < 6) return "weak";
     if (password.length < 8) return "fair";
-    if (/[A-Z]/.test(password) && /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) {
-      return "strong";
-    }
+    if (/[A-Z]/.test(password) && /[0-9]/.test(password) && /[^A-Za-z0-9]/.test(password)) return "strong";
     if (/[A-Z]/.test(password) || /[0-9]/.test(password)) return "good";
     return "fair";
   };
@@ -300,9 +290,7 @@ const Register = () => {
 
         <Form onSubmit={handleSubmit}>
           <FormGroup>
-            <Icon>
-              <FiUser />
-            </Icon>
+            <Icon><FiUser /></Icon>
             <Input
               type="text"
               name="username"
@@ -311,13 +299,12 @@ const Register = () => {
               onChange={handleChange}
               disabled={loading}
               required
+              autoComplete="username"
             />
           </FormGroup>
 
           <FormGroup>
-            <Icon>
-              <FiMail />
-            </Icon>
+            <Icon><FiMail /></Icon>
             <Input
               type="email"
               name="email"
@@ -326,13 +313,12 @@ const Register = () => {
               onChange={handleChange}
               disabled={loading}
               required
+              autoComplete="email"
             />
           </FormGroup>
 
           <FormGroup>
-            <Icon>
-              <FiLock />
-            </Icon>
+            <Icon><FiLock /></Icon>
             <Input
               type={showPassword ? "text" : "password"}
               name="password"
@@ -341,6 +327,7 @@ const Register = () => {
               onChange={handleChange}
               disabled={loading}
               required
+              autoComplete="new-password"
             />
             <PasswordToggle
               type="button"
@@ -352,18 +339,16 @@ const Register = () => {
 
             {formData.password && (
               <PasswordStrength>
-                Password strength: {passwordStrength}
+                <div>Password strength: {passwordStrength}</div>
                 <StrengthBar>
-                  <StrengthFill strength={passwordStrength} />
+                  <StrengthFill $strength={passwordStrength} />
                 </StrengthBar>
               </PasswordStrength>
             )}
           </FormGroup>
 
           <FormGroup>
-            <Icon>
-              <FiLock />
-            </Icon>
+            <Icon><FiLock /></Icon>
             <Input
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
@@ -372,6 +357,7 @@ const Register = () => {
               onChange={handleChange}
               disabled={loading}
               required
+              autoComplete="new-password"
             />
             <PasswordToggle
               type="button"
@@ -399,13 +385,8 @@ const Register = () => {
           </p>
           <p style={{ fontSize: "12px", color: "#999", marginTop: "16px" }}>
             By creating an account, you agree to our{" "}
-            <Link to="/terms" style={{ color: "#42b72a" }}>
-              Terms
-            </Link>{" "}
-            and{" "}
-            <Link to="/privacy" style={{ color: "#42b72a" }}>
-              Privacy Policy
-            </Link>
+            <Link to="/terms" style={{ color: "#42b72a" }}>Terms</Link> and{" "}
+            <Link to="/privacy" style={{ color: "#42b72a" }}>Privacy Policy</Link>
           </p>
         </Footer>
       </RegisterCard>
