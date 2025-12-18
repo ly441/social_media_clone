@@ -2,6 +2,7 @@ from flask import request, jsonify
 from app.models.post import Post
 from app.models.like import Like
 from app.models.user import User
+from app.models.follow import Follow
 from app.extensions import db
 
 class PostController:
