@@ -1,7 +1,7 @@
 from app.extensions import db
 from datetime import datetime
 import bcrypt
-from app import db 
+
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -15,16 +15,41 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # Relationships
-    posts = db.relationship('Post', backref='author', lazy=True, cascade='all, delete-orphan')
-    likes = db.relationship('Like', backref='user', lazy=True, cascade='all, delete-orphan')
-    comments = db.relationship('Comment', backref='author', lazy=True, cascade='all, delete-orphan')
-    followers = db.relationship('Follow', foreign_keys='Follow.followed_id', 
-                               backref='followed', lazy='dynamic',
-                               cascade='all, delete-orphan')
-    following = db.relationship('Follow', foreign_keys='Follow.follower_id',
-                               backref='follower', lazy='dynamic',
-                               cascade='all, delete-orphan')
+    
+     # ✅ Relationships
+    posts = db.relationship(
+        'Post',
+        back_populates='author',
+        cascade='all, delete-orphan'
+    )
+
+    likes = db.relationship(
+        'Like',
+        backref='user',
+        cascade='all, delete-orphan'
+    )
+
+    comments = db.relationship(
+        'Comment',
+        backref='author',
+        cascade='all, delete-orphan'
+    )
+
+    followers = db.relationship(
+        'Follow',
+        foreign_keys='Follow.followed_id',
+        backref='followed',
+        lazy='dynamic',
+        cascade='all, delete-orphan'
+    )
+
+    following = db.relationship(
+        'Follow',
+        foreign_keys='Follow.follower_id',
+        backref='follower',
+        lazy='dynamic',
+        cascade='all, delete-orphan'
+    )
     
     def set_password(self, password):
         self.password_hash = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')

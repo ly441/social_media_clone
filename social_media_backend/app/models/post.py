@@ -1,6 +1,6 @@
 from app.extensions import db
 from datetime import datetime
-from app import db
+
 class Post(db.Model):
     __tablename__ = 'posts'
     
@@ -10,11 +10,23 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
-    
-    # Relationships
-    author = db.relationship('User', backref='posts', lazy=True)
-    likes = db.relationship('Like', backref='post', lazy=True, cascade='all, delete-orphan')
-    comments = db.relationship('Comment', backref='post', lazy=True, cascade='all, delete-orphan')
+     # ✅ Relationships
+    author = db.relationship(
+        'User',
+        back_populates='posts'
+    )
+
+    likes = db.relationship(
+        'Like',
+        backref='post',
+        cascade='all, delete-orphan'
+    )
+
+    comments = db.relationship(
+        'Comment',
+        backref='post',
+        cascade='all, delete-orphan'
+    )
     
     def to_dict(self):
         """Convert post object to dictionary"""

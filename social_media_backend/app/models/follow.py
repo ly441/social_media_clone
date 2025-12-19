@@ -1,6 +1,6 @@
 from app.extensions import db
 from datetime import datetime
-from app import db
+
 class Follow(db.Model):
     __tablename__ = 'follows'
     
