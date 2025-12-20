@@ -1,149 +1,154 @@
-from datetime import datetime
-
-from app import create_app
-from app.extensions import db
+# seed.py
+from app import create_app, db
 from app.models import User, Post, Comment, Like, Follow
+from werkzeug.security import generate_password_hash
+from datetime import datetime, timedelta
+import random
 
-app = create_app()   # 🔥 create ONCE
-
+# Create the Flask app
+app = create_app()
 
 def seed_database():
-    """Seed the database with initial test data"""
-
-    print("🗑️ Clearing existing data...")
-
-    # Delete in FK-safe order
-    Like.query.delete()
-    Comment.query.delete()
-    Follow.query.delete()
-    Post.query.delete()
-    User.query.delete()
-
-    db.session.commit()
-
-    # ---------------- USERS ----------------
-    print("👥 Creating test users...")
-    users = []
-
-    admin = User(
-        username="admin",
-        email="admin@example.com",
-        bio="System administrator",
-        profile_picture="https://i.pravatar.cc/150?img=1"
-    )
-    admin.set_password("admin123")
-    users.append(admin)
-
-    for i in range(1, 6):
-        user = User(
-            username=f"user{i}",
-            email=f"user{i}@example.com",
-            bio=f"This is user {i}'s bio.",
-            profile_picture=f"https://i.pravatar.cc/150?img={i+5}"
-        )
-        user.set_password(f"password{i}")
-        users.append(user)
-
-    db.session.add_all(users)
-    db.session.commit()
-
-    # ---------------- POSTS ----------------
-    print("📝 Creating posts...")
-    posts = []
-
-    post_contents = [
-        "Just finished reading an amazing book! 📚",
-        "Beautiful day for a hike! 🏞️",
-        "Working on a new project 💻",
-        "Coffee with friends ☕",
-        "Learning something new 🌱",
-        "Sunsets are the best 🌅",
-        "5K run done 🏃‍♂️",
-        "Cooking something delicious 🍳",
-        "Music + work 🎵",
-        "Planning the week ahead 📅"
-    ]
-
-    for i, content in enumerate(post_contents):
-        post = Post(
-            content=content,
-            author=users[i % len(users)],
-            image_url=f"https://picsum.photos/seed/post{i}/800/600" if i % 3 == 0 else None,
-            created_at=datetime.utcnow()
-        )
-        posts.append(post)
-
-    db.session.add_all(posts)
-    db.session.commit()
-
-    # ---------------- COMMENTS ----------------
-    print("💬 Creating comments...")
-    comments = []
-
-    comment_contents = [
-        "Great post!",
-        "Totally agree!",
-        "Nice!",
-        "Well said!",
-        "Love this!",
-        "Interesting!",
-        "Awesome!",
-        "👏👏👏",
-        "🔥🔥🔥",
-        "Nice one!"
-    ]
-
-    for i in range(20):
-        comment = Comment(
-            content=comment_contents[i % len(comment_contents)],
-            author=users[i % len(users)],
-            post=posts[i % len(posts)]
-        )
-        comments.append(comment)
-
-    db.session.add_all(comments)
-    db.session.commit()
-
-    # ---------------- LIKES ----------------
-    print("❤️ Creating likes...")
-    likes = []
-
-    for user in users:
-        for j in range(3):
-            post = posts[(user.id + j) % len(posts)]
-            likes.append(Like(user=user, post=post))
-
-    db.session.add_all(likes)
-    db.session.commit()
-
-    # ---------------- FOLLOWS ----------------
-    print("👥 Creating follows...")
-    follows = []
-
-    for i, user in enumerate(users):
-        for j in range(1, 3):
-            followed = users[(i + j) % len(users)]
-            if user != followed:
-                follows.append(
-                    Follow(follower=user, followed=followed)
+    # Run everything within app context
+    with app.app_context():
+        print("🗑️ Clearing existing data...")
+        
+        
+        # Create users
+        users = []
+        user_data = [
+            {'username': 'john_doe', 'email': 'john@example.com', 'full_name': 'John Doe'},
+            {'username': 'jane_smith', 'email': 'jane@example.com', 'full_name': 'Jane Smith'},
+            {'username': 'bob_wilson', 'email': 'bob@example.com', 'full_name': 'Bob Wilson'},
+            {'username': 'alice_jones', 'email': 'alice@example.com', 'full_name': 'Alice Jones'},
+            {'username': 'charlie_brown', 'email': 'charlie@example.com', 'full_name': 'Charlie Brown'},
+        ]
+        
+        for data in user_data:
+            user = User(
+                username=data['username'],
+                email=data['email'],
+                password_hash=generate_password_hash('password123'),
+                bio=f"Hi, I'm {data['full_name']}!",
+                created_at=datetime.utcnow()
+            )
+            users.append(user)
+            db.session.add(user)
+        
+        db.session.commit()
+        print(f"✅ Created {len(users)} users")
+        
+        print("📝 Creating posts...")
+        
+        # Create posts
+        posts = []
+        post_contents = [
+            "Just had an amazing coffee ☕",
+            "Beautiful sunset today! 🌅",
+            "Working on a new project 💻",
+            "Weekend vibes! 🎉",
+            "Loving this weather ☀️",
+            "New blog post is live! Check it out",
+            "Finished reading a great book 📚",
+            "Exploring new places 🗺️",
+            "Coding session in progress... 👨‍💻",
+            "Dinner was delicious! 🍝"
+        ]
+        
+        for i, content in enumerate(post_contents):
+            post = Post(
+                content=content,
+                user_id=random.choice(users).id,
+                created_at=datetime.utcnow() - timedelta(days=random.randint(0, 30))
+            )
+            posts.append(post)
+            db.session.add(post)
+        
+        db.session.commit()
+        print(f"✅ Created {len(posts)} posts")
+        
+        print("💬 Creating comments...")
+        
+        # Create comments
+        comments = []
+        comment_texts = [
+            "Great post!",
+            "I totally agree!",
+            "Thanks for sharing!",
+            "This is awesome!",
+            "Love it! ❤️",
+            "Very interesting!",
+            "Nice one!",
+            "Well said!",
+        ]
+        
+        for post in posts:
+            # Random number of comments per post (0-3)
+            num_comments = random.randint(0, 3)
+            for _ in range(num_comments):
+                comment = Comment(
+                    content=random.choice(comment_texts),
+                    user_id=random.choice(users).id,
+                    post_id=post.id,
+                    created_at=post.created_at + timedelta(hours=random.randint(1, 24))
                 )
+                comments.append(comment)
+                db.session.add(comment)
+        
+        db.session.commit()
+        print(f"✅ Created {len(comments)} comments")
+        
+        print("❤️ Creating likes...")
+        
+        # Create likes
+        likes = []
+        for post in posts:
+            # Random number of likes per post (1-4)
+            num_likes = random.randint(1, 4)
+            liking_users = random.sample(users, min(num_likes, len(users)))
+            
+            for user in liking_users:
+                like = Like(
+                    user_id=user.id,
+                    post_id=post.id,
+                    created_at=post.created_at + timedelta(minutes=random.randint(1, 120))
+                )
+                likes.append(like)
+                db.session.add(like)
+        
+        db.session.commit()
+        print(f"✅ Created {len(likes)} likes")
+        
+        print("👥 Creating follows...")
+        
+        # Create follows
+        follows = []
+        for user in users:
+            # Each user follows 2-3 other users
+            num_follows = random.randint(2, 3)
+            other_users = [u for u in users if u.id != user.id]
+            following = random.sample(other_users, min(num_follows, len(other_users)))
+            
+            for followed_user in following:
+                follow = Follow(
+                    follower_id=user.id,
+                    followed_id=followed_user.id,
+                    created_at=datetime.utcnow() - timedelta(days=random.randint(1, 60))
+                )
+                follows.append(follow)
+                db.session.add(follow)
+        
+        db.session.commit()
+        print(f"✅ Created {len(follows)} follows")
+        
+        print("\n🎉 Database seeded successfully!")
+        print(f"📊 Summary:")
+        print(f"   - Users: {len(users)}")
+        print(f"   - Posts: {len(posts)}")
+        print(f"   - Comments: {len(comments)}")
+        print(f"   - Likes: {len(likes)}")
+        print(f"   - Follows: {len(follows)}")
 
-    db.session.add_all(follows)
-    db.session.commit()
-
-    # ---------------- SUMMARY ----------------
-    print("\n" + "=" * 50)
-    print("✅ DATABASE SEEDING COMPLETE!")
-    print("=" * 50)
-    print(f"Users: {User.query.count()}")
-    print(f"Posts: {Post.query.count()}")
-    print(f"Comments: {Comment.query.count()}")
-    print(f"Likes: {Like.query.count()}")
-    print(f"Follows: {Follow.query.count()}")
-
-
-if __name__ == "__main__":
-    with app.app_context():   # 🔥 REQUIRED
-        seed_database()
-
+if __name__ == '__main__':
+    seed_database()
     
