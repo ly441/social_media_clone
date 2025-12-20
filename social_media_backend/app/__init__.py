@@ -8,7 +8,10 @@ migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
-    
+    @app.route("/")
+    def home():
+        return "Welcome to the Social Media API!"
+
     # Configuration
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/social_media_db'  # or your DB URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
