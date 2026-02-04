@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   // Set axios defaults
+  axios.defaults.baseURL = "http://localhost:5002";
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
     const loadUser = async () => {
       if (token) {
         try {
-          const response = await axios.get("/auth/me");
+          const response = await axios.get("/auth/user");
           setUser(response.data.user);
         } catch (error) {
           console.error("Failed to load user:", error);

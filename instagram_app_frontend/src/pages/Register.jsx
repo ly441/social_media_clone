@@ -259,7 +259,7 @@ const Register = () => {
         setError(result.error || "Registration failed");
       } else {
         setSuccess("Registration successful! Redirecting...");
-        setTimeout(() => navigate("/login"), 2000);
+        setTimeout(() => navigate("/login"));
       }
     } catch {
       setError("An error occurred. Please try again.");

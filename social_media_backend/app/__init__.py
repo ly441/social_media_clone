@@ -2,12 +2,14 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from app.extensions import db
+from flask_cors import CORS
 
 db = SQLAlchemy()
 migrate = Migrate()
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)  # Enable CORS for all routes
     @app.route("/")
     def home():
         return "Welcome to the Social Media API!"
