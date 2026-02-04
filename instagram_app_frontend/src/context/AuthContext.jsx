@@ -1,6 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
+
 
 
 const AuthContext = createContext();
@@ -15,6 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   // Set axios defaults
   axios.defaults.baseURL = "http://localhost:5002";
+  axios.defaults.withCredentials = true;
   useEffect(() => {
     if (token) {
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;

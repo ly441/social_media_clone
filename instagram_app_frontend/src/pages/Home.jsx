@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { postAPI } from "../services/api";
+import InfiniteScroll from "react-infinite-scroll-component";
+import styled from "styled-components";
 import { useAuth } from "../context/AuthContext";
 import CreatePost from "../components/post/CreatePost";
 import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
 
-
-
+// ===== Styled Components =====
+const HomeContainer = styled.div`
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+`;
 
 const Home = () => {
   const { user } = useAuth();
@@ -17,6 +23,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchPosts();
+    // eslint-disable-next-line
   }, []);
 
   const fetchPosts = async (pageNum = 1) => {

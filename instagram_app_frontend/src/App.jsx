@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
@@ -14,29 +14,22 @@ import Profile from "./pages/Profile";
 import Explore from "./pages/Explore";
 import NotFound from "./pages/NotFound";
 
+// Lazy-loaded layout components
+const Navbar = lazy(() => import("./components/common/Navbar"));
+const Sidebar = lazy(() => import("./components/common/Sidebar"));
+
 // Layouts
-const AuthenticatedLayout = ({ children }) => {
-  const { user } = useAuth();
-
-  if (!user) {
-    return <Navigate to="/login" />;
-  }
-
-  const Navbar = React.lazy(() => import("./components/common/Navbar"));
-  const Sidebar = React.lazy(() => import("./components/common/Sidebar"));
-
-  return (
-    <React.Suspense fallback={<Loader />}>
-      <div className="app-layout">
-        <Navbar />
-        <div className="main-content">
-          <Sidebar />
-          <div className="content-area">{children}</div>
-        </div>
+const AuthenticatedLayout = ({ children }) => (
+  <Suspense fallback={<Loader />}>
+    <div className="app-layout">
+      <Navbar />
+      <div className="main-content">
+        <Sidebar />
+        <div className="content-area">{children}</div>
       </div>
-    </React.Suspense>
-  );
-};
+    </div>
+  </Suspense>
+);
 
 const PublicLayout = ({ children }) => (
   <div className="public-layout">{children}</div>
@@ -110,6 +103,7 @@ const AppRoutes = () => {
         }
       />
 
+      {/* 404 */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

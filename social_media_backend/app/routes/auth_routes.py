@@ -1,7 +1,7 @@
 
 from flask import Blueprint
 from flask_jwt_extended import jwt_required, get_jwt_identity
-from app.controllers import AuthController
+from app.controllers.auth_controller import AuthController
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
