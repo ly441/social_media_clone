@@ -1,73 +1,70 @@
 import React from "react";
+import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FiHome, FiSearch, FiMeh } from "react-icons/fi";
 
-
-
 const NotFound = () => {
-  const popularLinks = [
-    { to: "/", label: "Home" },
-    { to: "/explore", label: "Explore" },
-    { to: "/profile", label: "Profile" },
-    { to: "/messages", label: "Messages" },
-    { to: "/events", label: "Events" },
-    { to: "/groups", label: "Groups" },
-  ];
-
   return (
-    <NotFoundContainer>
-      <NotFoundContent>
-        <NotFoundIcon>
-          <FiMeh />
-        </NotFoundIcon>
+    <Container>
+      <Icon>
+        <FiMeh />
+      </Icon>
+      <Title>404</Title>
+      <Subtitle>Page Not Found</Subtitle>
 
-        <NotFoundTitle>404</NotFoundTitle>
-        <NotFoundSubtitle>Page Not Found</NotFoundSubtitle>
+      <Text>The page you’re looking for doesn’t exist or has been moved.</Text>
 
-        <NotFoundText>
-          Oops! The page you're looking for seems to have wandered off into the
-          digital wilderness. It might have been moved, deleted, or perhaps it
-          never existed in the first place.
-        </NotFoundText>
-
-        <NotFoundCode>
-          Error: 404 Not Found
-          <br />
-          Path: {window.location.pathname}
-          <br />
-          Timestamp: {new Date().toISOString()}
-        </NotFoundCode>
-
-        <ActionButtons>
-          <ActionButton primary to="/">
-            <FiHome />
-            Back to Home
-          </ActionButton>
-          <ActionButton to="/explore">
-            <FiSearch />
-            Explore Content
-          </ActionButton>
-        </ActionButtons>
-
-        <SearchSection>
-          <SearchTitle>Search for something else</SearchTitle>
-          <SearchInput
-            type="text"
-            placeholder="Search posts, people, or topics..."
-          />
-
-          <SearchTitle>Popular Pages</SearchTitle>
-          <PopularLinks>
-            {popularLinks.map((link) => (
-              <PopularLink key={link.to} to={link.to}>
-                {link.label}
-              </PopularLink>
-            ))}
-          </PopularLinks>
-        </SearchSection>
-      </NotFoundContent>
-    </NotFoundContainer>
+      <Buttons>
+        <Btn to="/">
+          <FiHome /> Home
+        </Btn>
+        <Btn to="/explore">
+          <FiSearch /> Explore
+        </Btn>
+      </Buttons>
+    </Container>
   );
 };
 
 export default NotFound;
+
+const Container = styled.div`
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
+const Icon = styled.div`
+  font-size: 60px;
+  color: #999;
+`;
+
+const Title = styled.h1`
+  font-size: 80px;
+`;
+
+const Subtitle = styled.h2`
+  color: #444;
+`;
+
+const Text = styled.p`
+  color: #666;
+  max-width: 400px;
+`;
+
+const Buttons = styled.div`
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+`;
+
+const Btn = styled(Link)`
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+`;

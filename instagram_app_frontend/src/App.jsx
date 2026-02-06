@@ -1,4 +1,3 @@
-
 import React, { Suspense, lazy } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
@@ -18,7 +17,6 @@ import NotFound from "./pages/NotFound";
 const Navbar = lazy(() => import("./components/common/Navbar"));
 const Sidebar = lazy(() => import("./components/common/Sidebar"));
 
-// Layouts
 const AuthenticatedLayout = ({ children }) => (
   <Suspense fallback={<Loader />}>
     <div className="app-layout">

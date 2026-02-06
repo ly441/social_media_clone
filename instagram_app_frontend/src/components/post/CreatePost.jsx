@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+import { FiImage, FiSmile, FiMapPin } from "react-icons/fi";
 import { useAuth } from "../../context/AuthContext";
 import { postAPI } from "../../services/api";
-
-
+import { toast } from "react-toastify";
 
 const CreatePost = ({ onPostCreated }) => {
   const { user } = useAuth();
@@ -37,7 +38,6 @@ const CreatePost = ({ onPostCreated }) => {
     const file = e.target.files[0];
     if (file && file.type.startsWith("image/")) {
       if (file.size > 5 * 1024 * 1024) {
-        // 5MB limit
         toast.error("Image size should be less than 5MB");
         return;
       }
@@ -80,15 +80,18 @@ const CreatePost = ({ onPostCreated }) => {
               style={{ display: "none" }}
             />
           </ActionButton>
+
           <ActionButton>
             <FiSmile />
             Feeling
           </ActionButton>
+
           <ActionButton>
             <FiMapPin />
             Check in
           </ActionButton>
         </ActionButtons>
+
         <SubmitButton
           onClick={handleSubmit}
           disabled={(!content.trim() && !image) || loading}
@@ -101,3 +104,99 @@ const CreatePost = ({ onPostCreated }) => {
 };
 
 export default CreatePost;
+
+/* Styled Components */
+const CreatePostContainer = styled.div`
+  background: #fff;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const PostHeader = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+`;
+
+const UserAvatar = styled.img`
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const TextArea = styled.textarea`
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  resize: none;
+  font-size: 14px;
+`;
+
+const ImagePreview = styled.div`
+  position: relative;
+  margin: 10px 0;
+`;
+
+const PreviewImage = styled.img`
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+`;
+
+const RemoveImage = styled.span`
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 2px 6px;
+`;
+
+const PostActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const ActionButtons = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const ActionButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: #f0f2f5;
+  padding: 5px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background: #e4e6eb;
+  }
+`;
+
+const SubmitButton = styled.button`
+  background: #1877f2;
+  color: #fff;
+  border: none;
+  padding: 7px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`;

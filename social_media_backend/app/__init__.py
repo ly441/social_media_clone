@@ -20,7 +20,7 @@ def create_app():
     CORS(
         app,
         supports_credentials=True,
-        origins=["http://localhost:5183"],  # React dev server
+        origins=["http://localhost:5184"],  # React dev server
         methods=["GET", "POST", "PUT", "DELETE"],
         allow_headers=["Content-Type", "Authorization"]
     )

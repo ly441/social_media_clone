@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { userAPI, followAPI } from "../services/api";
 import { useAuth } from "../context/AuthContext";
@@ -7,11 +8,10 @@ import EditProfileModal from "../components/user/EditProfile";
 import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
 
-
-
 const Profile = () => {
   const { userId } = useParams();
   const { user: currentUser } = useAuth();
+
   const [profileUser, setProfileUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [followers, setFollowers] = useState([]);
@@ -23,9 +23,7 @@ const Profile = () => {
   const targetUserId = userId || currentUser?.id;
 
   useEffect(() => {
-    if (targetUserId) {
-      fetchProfileData();
-    }
+    if (targetUserId) fetchProfileData();
   }, [targetUserId]);
 
   const fetchProfileData = async () => {
@@ -46,8 +44,8 @@ const Profile = () => {
       setPosts(postsResponse.data.posts);
       setFollowers(followersResponse.data.followers);
       setFollowing(followingResponse.data.following);
-    } catch (error) {
-      console.error("Failed to fetch profile data:", error);
+    } catch (err) {
+      console.error("Failed to fetch profile:", err);
     } finally {
       setLoading(false);
     }
@@ -56,24 +54,14 @@ const Profile = () => {
   const handleFollow = async () => {
     try {
       await followAPI.follow(targetUserId);
-      fetchProfileData(); // Refresh data
-    } catch (error) {
-      console.error("Failed to follow user:", error);
+      fetchProfileData();
+    } catch (err) {
+      console.error("Follow failed:", err);
     }
   };
 
-  const handleProfileUpdate = () => {
-    setShowEditModal(false);
-    fetchProfileData();
-  };
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (!profileUser) {
-    return <div>User not found</div>;
-  }
+  if (loading) return <Loader />;
+  if (!profileUser) return <p>User not found</p>;
 
   return (
     <ProfileContainer>
@@ -88,67 +76,48 @@ const Profile = () => {
       />
 
       <ProfileContent>
-        <ProfileSidebar>
-          <Section>
-            <SectionTitle>About</SectionTitle>
-            <InfoItem>
-              <InfoLabel>Bio:</InfoLabel>
-              <InfoValue>{profileUser.bio || "No bio yet"}</InfoValue>
-            </InfoItem>
-            <InfoItem>
-              <InfoLabel>Joined:</InfoLabel>
-              <InfoValue>
-                {new Date(profileUser.created_at).toLocaleDateString()}
-              </InfoValue>
-            </InfoItem>
-            <InfoItem>
-              <InfoLabel>Email:</InfoLabel>
-              <InfoValue>{profileUser.email}</InfoValue>
-            </InfoItem>
-          </Section>
+        <Sidebar>
+          <Card>
+            <Title>About</Title>
+            <Info>{profileUser.bio || "No bio yet"}</Info>
+            <Info>Email: {profileUser.email}</Info>
+            <Info>
+              Joined: {new Date(profileUser.created_at).toLocaleDateString()}
+            </Info>
+          </Card>
 
-          <Section>
-            <SectionTitle>Followers ({followers.length})</SectionTitle>
-            <div>
-              {followers.slice(0, 5).map((follower) => (
-                <div key={follower.user.id} style={{ marginBottom: "8px" }}>
-                  {follower.user.username}
-                </div>
-              ))}
-            </div>
-          </Section>
+          <Card>
+            <Title>Followers ({followers.length})</Title>
+            {followers.slice(0, 5).map((f) => (
+              <SmallText key={f.user.id}>{f.user.username}</SmallText>
+            ))}
+          </Card>
 
-          <Section>
-            <SectionTitle>Following ({following.length})</SectionTitle>
-            <div>
-              {following.slice(0, 5).map((follow) => (
-                <div key={follow.user.id} style={{ marginBottom: "8px" }}>
-                  {follow.user.username}
-                </div>
-              ))}
-            </div>
-          </Section>
-        </ProfileSidebar>
+          <Card>
+            <Title>Following ({following.length})</Title>
+            {following.slice(0, 5).map((f) => (
+              <SmallText key={f.user.id}>{f.user.username}</SmallText>
+            ))}
+          </Card>
+        </Sidebar>
 
-        <ProfileMain>
-          <Section>
-            <SectionTitle>Posts ({posts.length})</SectionTitle>
-            {posts.length > 0 ? (
-              posts.map((post) => (
-                <Post key={post.id} post={post} onDelete={fetchProfileData} />
-              ))
-            ) : (
-              <p>No posts yet</p>
-            )}
-          </Section>
-        </ProfileMain>
+        <Main>
+          <Title>Posts ({posts.length})</Title>
+          {posts.length > 0 ? (
+            posts.map((post) => (
+              <Post key={post.id} post={post} onDelete={fetchProfileData} />
+            ))
+          ) : (
+            <SmallText>No posts yet</SmallText>
+          )}
+        </Main>
       </ProfileContent>
 
       {showEditModal && (
         <EditProfileModal
           user={profileUser}
           onClose={() => setShowEditModal(false)}
-          onUpdate={handleProfileUpdate}
+          onUpdate={fetchProfileData}
         />
       )}
     </ProfileContainer>
@@ -156,3 +125,53 @@ const Profile = () => {
 };
 
 export default Profile;
+
+/* ================= STYLES ================= */
+
+const ProfileContainer = styled.div`
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+`;
+
+const ProfileContent = styled.div`
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const Sidebar = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`;
+
+const Card = styled.div`
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 16px;
+`;
+
+const Title = styled.h3`
+  margin-bottom: 8px;
+`;
+
+const Info = styled.p`
+  font-size: 14px;
+  color: #555;
+`;
+
+const SmallText = styled.p`
+  font-size: 13px;
+  color: #666;
+`;
