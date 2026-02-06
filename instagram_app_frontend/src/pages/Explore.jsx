@@ -50,11 +50,11 @@ const Explore = () => {
   const fetchTrending = async () => {
     setLoading((prev) => ({ ...prev, trending: true }));
     setTrending([
-      { id: 1, title: "#SocialMedia", posts: "2.5K posts" },
-      { id: 2, title: "#ReactJS", posts: "1.8K posts" },
-      { id: 3, title: "#WebDevelopment", posts: "3.2K posts" },
-      { id: 4, title: "#AI", posts: "4.1K posts" },
-      { id: 5, title: "#TechNews", posts: "1.5K posts" },
+      { id: 1, title: "SocialMedia", posts: "2.5K posts" },
+      { id: 2, title: "ReactJS", posts: "1.8K posts" },
+      { id: 3, title: "WebDevelopment", posts: "3.2K posts" },
+      { id: 4, title: "AI", posts: "4.1K posts" },
+      { id: 5, title: "TechNews", posts: "1.5K posts" },
     ]);
     setLoading((prev) => ({ ...prev, trending: false }));
   };
@@ -240,5 +240,5 @@ const TrendingItem = styled.div`
   gap: 10px;
   padding: 12px;
   border-radius: 8px;
-  background: #f9fafb;
+  background: black;
 `;

@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, request
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.controllers import PostController
 
@@ -11,12 +11,14 @@ def create_post():
     current_user_id = int(get_jwt_identity())
     return PostController.create_post(current_user_id)
 
-# Get all posts
+# Get all posts with pagination
 @post_bp.route('/', methods=['GET'])
 @jwt_required()
 def get_all_posts():
     current_user_id = int(get_jwt_identity())
-    return PostController.get_all_posts(current_user_id)
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    return PostController.get_all_posts(current_user_id, page, per_page)
 
 # Get a single post
 @post_bp.route('/<int:post_id>', methods=['GET'])

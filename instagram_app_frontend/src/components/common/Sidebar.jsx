@@ -101,6 +101,7 @@ const NavLinkStyled = styled(NavLink)`
 
 const Shortcuts = styled.div`
   margin-bottom: 20px;
+  background-color:rgb(141, 138, 138);
 `;
 
 const ShortcutList = styled.ul`
@@ -114,13 +115,14 @@ const ShortcutItem = styled.li`
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    color: #42b72a;
+    color:rgb(3, 13, 1);
   }
+  text-color: black;
 `;
 
 const SidebarFooter = styled.div`
   font-size: 12px;
-  color: #888;
+  color: black;
 `;
 
 const FooterLinks = styled.div`
@@ -131,7 +133,7 @@ const FooterLinks = styled.div`
 `;
 
 const FooterLink = styled.a`
-  color: #888;
+  color: black;
   text-decoration: none;
   &:hover {
     text-decoration: underline;
@@ -174,7 +176,10 @@ const Sidebar = () => {
         <UserSection>
           <UserInfo>
             <UserAvatar
-              src={user?.profile_picture || "https://via.placeholder.com/150"}
+              src={
+                user?.profile_picture ||
+                "https://www.pinterest.com/pin/296956169204723884/"
+              }
               alt={user?.username}
             />
             <UserDetails>

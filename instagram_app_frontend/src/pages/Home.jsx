@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import CreatePost from "../components/post/CreatePost";
 import Post from "../components/post/Post";
 import Loader from "../components/common/Loader";
+import { postAPI } from "../services/api";
 
 // ===== Styled Components =====
 const HomeContainer = styled.div`
@@ -13,6 +14,14 @@ const HomeContainer = styled.div`
   margin: 0 auto;
   padding: 20px;
 `;
+const fetchPosts = async () => {
+  try {
+    const res = await postAPI.get("/");
+    setPosts(res.data);
+  } catch (error) {
+    console.error("Failed to fetch posts:", error);
+  }
+};
 
 const Home = () => {
   const { user } = useAuth();
@@ -21,10 +30,7 @@ const Home = () => {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchPosts();
-    // eslint-disable-next-line
-  }, []);
+  
 
   const fetchPosts = async (pageNum = 1) => {
     try {
